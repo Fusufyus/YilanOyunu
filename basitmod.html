@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yılan Oyunu - Basit Mod</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background-color: #333;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .game-mode {
+            width: 250px;
+            height: 50px;
+            margin: 10px;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .game-mode:hover {
+            background-color: #444;
+        }
+
+        .simple-mode {
+            background-color: green;
+        }
+
+        #gameCanvas {
+            border: 1px solid #000;
+            margin-top: 20px;
+        }
+
+        #infoPanel {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #fff;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Yılan Oyunu - Basit Mod</h1>
+    <div class="game-mode simple-mode" onclick="startSimpleGame()">Basit Mod</div>
+    
+    <canvas id="gameCanvas" width="500" height="500"></canvas>
+    <div id="infoPanel"></div>
+
+    <script>
+        // Genel Oyun Parametreleri
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const gridSize = 20;
+        const canvasSize = 500;
+        let snake, apple, score, gameInterval, direction;
+
+        // Başlangıç Yılanı
+        function initGame() {
+            snake = [{ x: 5, y: 5 }];
+            score = 0;
+            direction = 'RIGHT';
+            apple = spawnApple();
+            gameInterval = setInterval(gameLoop, 100);
+        }
+
+        // Oyun Döngüsü
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);  // Ekranı temizle
+            moveSnake();
+            checkCollisions();
+            drawSnake();
+            drawApple();
+            drawScore();
+        }
+
+        // Yılanın Hareketi
+        function moveSnake() {
+            const head = { ...snake[0] };
+            if (direction === 'UP') head.y--;
+            if (direction === 'DOWN') head.y++;
+            if (direction === 'LEFT') head.x--;
+            if (direction === 'RIGHT') head.x++;
+
+            snake.unshift(head); // Yılan başını ekle
+
+            if (head.x === apple.x && head.y === apple.y) {
+                score++;
+                apple = spawnApple();
+            } else {
+                snake.pop(); // Yılanın sonunu sil
+            }
+        }
+
+        // Yılanın Çizilmesi (Boşluk Eklemek İçin Güncelleme)
+        function drawSnake() {
+            ctx.fillStyle = 'green';
+            const spaceBetweenSegments = 2;  // Yılan segmentleri arasındaki boşluk miktarı
+            snake.forEach(segment => {
+                ctx.fillRect(segment.x * gridSize + spaceBetweenSegments, segment.y * gridSize + spaceBetweenSegments, gridSize - spaceBetweenSegments, gridSize - spaceBetweenSegments);
+            });
+        }
+
+        // Elma Çizme
+        function drawApple() {
+            ctx.fillStyle = 'red';
+            ctx.fillRect(apple.x * gridSize, apple.y * gridSize, gridSize, gridSize);
+        }
+
+        // Skor Gösterimi
+        function drawScore() {
+            ctx.fillStyle = 'black';
+            ctx.font = '16px Arial';
+            ctx.fillText(`Puan: ${score}`, 10, 20);
+        }
+
+        // Elma Yeri
+        function spawnApple() {
+            const x = Math.floor(Math.random() * (canvasSize / gridSize));
+            const y = Math.floor(Math.random() * (canvasSize / gridSize));
+            return { x, y };
+        }
+
+        // Çarpışma Kontrolü
+        function checkCollisions() {
+            const head = snake[0];
+
+            // Yılanın kendisine çarpması
+            for (let i = 1; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    gameOver();
+                }
+            }
+
+            // Ekran sınırlarına çarpması
+            if (head.x < 0 || head.x >= canvas.width / gridSize || head.y < 0 || head.y >= canvas.height / gridSize) {
+                gameOver();
+            }
+        }
+
+        // Oyun Bitişi
+        function gameOver() {
+            clearInterval(gameInterval);  // Oyunu durdur
+            alert("Game Over! Skorunuz: " + score);
+            resetGame();
+        }
+
+        // Oyunu Yeniden Başlatma
+        function resetGame() {
+            snake = [{ x: 5, y: 5 }];
+            score = 0;
+            direction = 'RIGHT';
+            apple = spawnApple();
+        }
+
+        // Mod Seçme Fonksiyonu
+        function startSimpleGame() {
+            initGame();
+            document.body.style.backgroundColor = "#4caf50";  // Yeşil arka plan
+        }
+
+        // Klavye ile Yılanı Hareket Ettirme
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
+            if (e.key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
+            if (e.key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
+            if (e.key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
+        });
+    </script>
+</body>
+</html>

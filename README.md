@@ -1,2 +1,0 @@
-# YilanOyunu
-Yılan oyunu plus

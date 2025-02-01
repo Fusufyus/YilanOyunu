@@ -3,12 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yılan Oyunu</title>
-    <link rel="stylesheet" href="style.css"> <!-- Eğer bir CSS dosyanız varsa -->
+    <title>Yılan Oyunu Plus</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .button-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .button-container a {
+            text-decoration: none;
+        }
+        .button-container button {
+            padding: 20px 40px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+            width: 200px;
+            margin: 10px;
+        }
+        .button-container button:hover {
+            background-color: #45a049;
+        }
+        .footer {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Bilgi simgeleri ve açıklama kutusu */
+        .info-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .info-icon {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            font-size: 25px;
+            transition: background-color 0.3s;
+        }
+
+        .info-icon:hover {
+            background-color: #45a049;
+        }
+
+        .info-icon-alt {
+            background-color: #FF5722; /* Farklı renk */
+        }
+
+        #info-box {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: white;
+            border: 2px solid #4CAF50;
+            padding: 15px;
+            border-radius: 10px;
+            width: 250px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #info-box p {
+            font-size: 14px;
+            color: #333;
+        }
+
+        #close-info {
+            cursor: pointer;
+            color: #4CAF50;
+            font-weight: bold;
+            text-align: right;
+        }
+    </style>
 </head>
 <body>
-    <h1>Yılan Oyunu Plus</h1>
-    <canvas id="gameCanvas" width="400" height="400"></canvas> <!-- Oyun alanı -->
-    <script src="game.js"></script> <!-- Oyunla ilgili JavaScript dosyası -->
+    <h1>YILAN OYUNU PLUS</h1>
+    <div class="button-container">
+        <a href="basitmod.html">
+            <button>Basit Mod</button>
+        </a>
+        <a href="yilanplus.html">
+            <button>Özel Elmalar Modu</button>
+        </a>
+        <a href="level_modu.html">
+            <button>Level Modu</button>
+        </a>
+        <a href="cehennem_modu.html">
+            <button>Cehennem Modu</button>
+        </a>
+        <a href="cennet_modu.html">
+            <button>Cennet Modu</button>
+        </a>
+        <a href="genis.html">
+            <button>Genişlik Modu</button>
+        </a>
+    </div>
+    <div class="footer">
+        By: viran
+    </div>
+
+    <!-- Bilgi simgeleri -->
+    <div class="info-container">
+        <div id="info-icon" class="info-icon">i</div>
+        <div id="info-icon-alt" class="info-icon info-icon-alt">?</div>
+    </div>
+
+    <!-- Açılır bilgi kutusu -->
+    <div id="info-box">
+        <div id="close-info">X</div>
+        <p>
+		                             ----ÖZEL MOD ELMALARI----         
+		
+*Dondurucu Elma (Buz Mavi): Yılanın hareketini tamamen durdurur ve 3 saniye sonra tekrar harekete geçirir.
+*Çılgın Elma (Mor): Yılanın kontrolünü tersine çevirir (yukarı ok aşağı hareket ettirir) ve etkisi 5 saniye sürer.
+*Hızlandırıcı Elma (Turuncu): Oyun hızını 1.5 katına çıkarır ve etkisi 4 saniye sürer.
+*Kontrol Elması (Gri): Yılanın boyunu arttırır ve tekrardan oluşmasını sağlar.
+*Şanslı Elma (Bej Rengi): Yemesi hâlinde 50% şansla ekstra 3 puan kazandırır, 50% şansla 3 puan kaybettirir.
+*Siyah elma: Kullanıcı bu elmayı yediğinde ekranı kısa süreliğine siyahlar.
+*Pembe elma: kullanıcı bu elmayı yediğinde ekranı 3 saniyeliğine dönmeye başlar.
+*Altın elma: Kullanıcı bu elmayı yediğinde 3 birim büyür.
+*Zehirli elma: kullanıcı bu elmayı yediğinde bir birim küçülür. Bu elmanın yeri her 5 saniyede bir değişir.
+*Yavaşlık buzu elması: kullanıcı bu elmayı yediğinde hareket hızı 3 saniyeliğine yüzde 50 azalır.
+*Mutlak ölümsüzlük elması: kullanıcı bu elmayı yediğinde kısa bir süreliğine ölümsüz olur. Ekranın kenarına çarpsa bile ekran dışından oyuna geri döndürülebilir ve bu süre zarfında oyunun bitmesini engeller.
+(Cennet modunda renkler temaya uygun farklılık gösterebilir.)</p>
+    </div>
+
+    <script>
+        // Bilgi simgesi tıklama işlemleri
+        const infoIcon = document.getElementById('info-icon');
+        const infoBox = document.getElementById('info-box');
+        const closeInfo = document.getElementById('close-info');
+        
+        // Açma ve kapama işlemleri
+        infoIcon.addEventListener('click', function() {
+            if (infoBox.style.display === 'none' || infoBox.style.display === '') {
+                infoBox.style.display = 'block';
+            } else {
+                infoBox.style.display = 'none';
+            }
+        });
+
+        closeInfo.addEventListener('click', function() {
+            infoBox.style.display = 'none';
+        });
+        
+        // Alternatif simge için başka bir işlem ekleyebilirsin
+        const infoIconAlt = document.getElementById('info-icon-alt');
+        infoIconAlt.addEventListener('click', function() {
+            alert("Bu oyun, Yılan Oyunu'nun çeşitli modlarını içeriyor. Her mod farklı zorluklar ve özellikler sunuyor. Özel elmalar, yeni seviyeler ve daha fazlası ile oyun deneyiminizi geliştirin!");
+        });
+    </script>
 </body>
 </html>

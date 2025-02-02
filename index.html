@@ -117,16 +117,16 @@
     var playButton = document.getElementById("playButton");
 
     playButton.addEventListener("click", function() {
-        // İlk tıklama ile sesi başlat
+        // İlk başta muted, sonra tıklama ile sesi açalım
         audio.muted = false;  // Sesi aç
         audio.play().then(function() {
             console.log("Ses başarıyla başlatıldı!");
+            playButton.style.display = 'none'; // Butonu gizle
         }).catch(function(error) {
             console.error("Ses başlatılamadı: ", error);
         });
     });
 </script>
-
 
 
 

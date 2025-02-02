@@ -109,24 +109,7 @@
 </head>
 <body>
     <h1>YILAN OYUNU PLUS</h1>
-		<audio id="myAudio" src="https://github.com/Fusufyus/YilanOyunu/raw/main/MuzikIndex.mp3" loop muted></audio>
-<button id="playButton">Sesi Başlat</button>
-
-<script>
-    var audio = document.getElementById("myAudio");
-    var playButton = document.getElementById("playButton");
-
-    playButton.addEventListener("click", function() {
-        audio.muted = false;  // Sesi aç
-        audio.play().then(function() {
-            console.log("Ses başarıyla başlatıldı!");
-            playButton.style.display = 'none'; // Butonu gizle
-        }).catch(function(error) {
-            console.error("Ses başlatılamadı: ", error);
-        });
-    });
-</script>
-
+		<audio src="Muzik.Index.mp3" controls loop></audio>
 
 
     <div class="button-container">

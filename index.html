@@ -109,7 +109,19 @@
 </head>
 <body>
     <h1>YILAN OYUNU PLUS</h1>
-	<audio src="MuzikIndex.mp3" controls loop></audio>
+	<audio id="myAudio" src="ses_dosyasi.mp3" loop></audio>
+<button id="playButton">Sesi Aç</button>
+
+<script>
+    var audio = document.getElementById("myAudio");
+    var playButton = document.getElementById("playButton");
+
+    playButton.addEventListener("click", function() {
+        audio.play(); // Sesi çalmaya başlat
+        playButton.style.display = 'none'; // Butonu gizle
+    });
+</script>
+
     <div class="button-container">
         <a href="pages/basitmod.html">
             <button>Basit Mod</button>
